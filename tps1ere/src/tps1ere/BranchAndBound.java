@@ -23,7 +23,7 @@ public class BranchAndBound {
 
 		for (int i = 0; i < p.length(); i++) {
 
-			if (p.charAt(i) == '_') {
+			if (p.charAt(i)=='>') {
 
 				ref.add(mot);
 				mot = new StringBuffer();
@@ -140,7 +140,7 @@ public class BranchAndBound {
 					
 					children2.addAll(branch(children.get(0), ref, element));
 
-					System.out.println("j= " + j);
+					//System.out.println("j= " + j);
 
 					/*
 					 * for (k = 0; k < children2.size(); k++) {

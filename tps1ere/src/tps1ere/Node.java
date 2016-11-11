@@ -20,7 +20,7 @@ public class Node {
 
 	void setId(String id) {
 
-		this.id =parent.id+"_"+id;
+		this.id =parent.id+">"+id;
 	}
 	
 	void setLb(double lb) {
@@ -57,7 +57,7 @@ public class Node {
 		
 		ArrayList<Node> children = new ArrayList<>();
 		for (int i = 0; i < nbe; i++) {
-			System.out.println("i ="+i);
+			
 			
 			
 			children.add(i, new Node(0,null));
@@ -67,7 +67,7 @@ public class Node {
 			children.get(i).setId(ref.get(i));
 			
 			
-			System.out.println("apres ref ="+ref);
+			
 		}
 		return children;
 
