@@ -243,8 +243,10 @@ public class Pblm extends JFrame {
 
 						if (couts.getValueAt(i, j) != null)
 							cost.add(j, Double.parseDouble(couts.getValueAt(i, j).toString()));
-						else
-							cost.add(j, null);
+						else {
+							double d = Double.NaN;
+							cost.add(j, d);
+						}
 
 					}
 					matrice.add(i, cost);
@@ -253,6 +255,26 @@ public class Pblm extends JFrame {
 
 				System.out.println(matrice);
 			}
+
+			ArrayList<String> ref = new ArrayList<String>();
+			for (int i = 0; i < v.size(); i++) {
+
+				ref.add(i, v.get(i).toString());
+			}
+
+			BranchAndBound bb = new BranchAndBound(matrice, ref);
+			System.out.println("id =" + bb.root.getId());
+			System.out.println("enfant =" + bb.root.nbE);
+
+			String rId = ref.get(0);
+			//ref.remove(0);
+			/*
+			 * children=bb.root.addChild(bb.root.nbE,ref); for(int
+			 * i=0;i<children.size();i++){
+			 * 
+			 * System.out.println(children.get(i).getId()); }
+			 */
+			bb.gen(ref);
 
 		}
 

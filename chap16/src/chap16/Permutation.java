@@ -188,10 +188,9 @@ public class Permutation {
 			for (int i = 0; i < mot.length(); i++) {
 
 				mot = move(mot, i, 0);
-				//System.out.println("apres move " + mot);
+				
 				perm = permutation(new StringBuffer(mot.substring(1)), perm);
-				//System.out.println(perm);
-				//System.out.println(mot);
+				
 				for (int j = 0; j < perm.size(); j++) {
 					if (perm.get(j).length() < mot.length()) {
 						
@@ -205,7 +204,7 @@ public class Permutation {
 						if (j != perm.size() - 1)
 							continue;
 					}
-						//System.out.println("pk " + perm);
+						
 					
 				}
 			}
