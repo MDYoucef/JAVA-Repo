@@ -20,10 +20,6 @@ public class BranchAndBound {
 		ArrayList<StringBuffer> ref = new ArrayList<StringBuffer>();
 		StringBuffer p = new StringBuffer(m1);
 		StringBuffer mot = new StringBuffer();
-		ArrayList<String> fin = new ArrayList<String>();
-
-		// System.out.println(p.length());
-		// System.out.println(p.charAt(0));
 
 		for (int i = 0; i < p.length(); i++) {
 
@@ -44,19 +40,21 @@ public class BranchAndBound {
 			}
 
 		}
-		fin=ids;
-		System.out.println("ref =" + ref);
+		
+		
 		for (int j = 0; j < ids.size(); j++) {
 			for (int i = 0; i < ref.size(); i++) {
-
+			
 				if (ids.get(j).equals(ref.get(i).toString())) {
-					fin.remove(j);
-					System.out.println("fin =" + fin);
+					ids.remove(j);
+					j=0;
+					i=0;
+					
 				}
 			}
 
 		}
-		return fin;
+		return ids;
 
 	}
 
@@ -117,7 +115,7 @@ public class BranchAndBound {
 		ArrayList<Node> children = new ArrayList<Node>();
 		children.add(root);
 
-		int c = 0;
+		
 		int k = 0;
 		int element = ids.size() - 1;
 		int t = children.size();
@@ -129,18 +127,16 @@ public class BranchAndBound {
 
 			for (int j = 0; j < t; j++) {
 				
-				System.out.println("mot courant "+children.get(0).id);
+				//System.out.println("mot courant "+children.get(0).id);
 				ref2.clear();
 				ref2.addAll(ids);
-				System.out.println("ids "+ids);
-				System.out.println("ref2 "+ref2);
 				children2.addAll(branch(children.get(0), nommage(children.get(0).id, ref2), element, j));
 
 				System.out.println("j= " + j);
 
-				for (k = 0; k < children2.size(); k++) {
+				/*for (k = 0; k < children2.size(); k++) {
 					System.out.println(children2.get(k).id);
-				}
+				}*/
 				children.addAll(children2);
 				children.remove(0);
 
@@ -149,28 +145,19 @@ public class BranchAndBound {
 			}
 			t = children.size();
 
-			// children2.clear();
+			
 			element--;
 
-			System.out.println("taille de children= " + children.size());
+			
 		}
 
-		/*
-		 * for(int i=0;i<children.size();i++) {
-		 * System.out.println(children.get(i).id);
-		 * 
-		 * }
-		 */
+		for(int i=0;i<children.size();i++) {
+			 System.out.println(children.get(i).id);
+		}
+		System.out.println("taille = "+children.size());
 
 	}
 
-	/*
-	 * public static void main(String[] args) {
-	 * 
-	 * BranchAndBound bb = new BranchAndBound();
-	 * System.out.println("enfant ="+bb.root.nbE);
-	 * 
-	 * }
-	 */
+	
 
 }
