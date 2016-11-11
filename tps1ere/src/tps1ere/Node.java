@@ -51,7 +51,7 @@ public class Node {
 		return children;
 	}
 	
-	ArrayList<Node> addChild(int nbe,ArrayList<String>ref,int j) {
+	ArrayList<Node> addChild(int nbe,ArrayList<String>ref) {
 		
 		
 		

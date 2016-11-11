@@ -40,16 +40,15 @@ public class BranchAndBound {
 			}
 
 		}
-		
-		
+
 		for (int j = 0; j < ids.size(); j++) {
 			for (int i = 0; i < ref.size(); i++) {
-			
+
 				if (ids.get(j).equals(ref.get(i).toString())) {
 					ids.remove(j);
-					j=0;
-					i=0;
-					
+					j = 0;
+					i = 0;
+
 				}
 			}
 
@@ -100,64 +99,70 @@ public class BranchAndBound {
 
 	}
 
-	ArrayList<Node> branch(Node n, ArrayList<String> ids, int nbe, int j) {
+	ArrayList<Node> branch(Node n, ArrayList<String> ids, int nbe) {
 
 		ArrayList<Node> children = new ArrayList<Node>();
-		children = n.addChild(nbe, ids, j);
+		children = n.addChild(nbe, ids);
 		return children;
 
 	}
 
 	void gen(ArrayList<String> ids) {
-		
-		ArrayList<String>ref2=new ArrayList<String>();
+
+		ArrayList<String> ref2 = new ArrayList<String>();
+		ArrayList<String> ref = new ArrayList<String>();
 		ref2.addAll(ids);
 		ArrayList<Node> children = new ArrayList<Node>();
 		children.add(root);
 
-		
 		int k = 0;
 		int element = ids.size() - 1;
 		int t = children.size();
 		ArrayList<Node> children2 = null;
 
-		for (int i = 0; i < ids.size() - 1; i++) {
-
-			children2 = new ArrayList<Node>();
-
-			for (int j = 0; j < t; j++) {
-				
-				//System.out.println("mot courant "+children.get(0).id);
-				ref2.clear();
-				ref2.addAll(ids);
-				children2.addAll(branch(children.get(0), nommage(children.get(0).id, ref2), element, j));
-
-				System.out.println("j= " + j);
-
-				/*for (k = 0; k < children2.size(); k++) {
-					System.out.println(children2.get(k).id);
-				}*/
-				children.addAll(children2);
-				children.remove(0);
-
-				children2.clear();
-
-			}
-			t = children.size();
+		for (int i = 0; i < ids.size(); i++) {
 
 			
-			element--;
+				children2 = new ArrayList<Node>();
 
+				for (int j = 0; j < t; j++) {
+
+					// System.out.println("mot courant "+children.get(0).id);
+					ref2.clear();
+					if(i==ids.size()-1) {
+						ref.add(ids.get(0));
+						element=1;
+					}
+					else {
+					ref2.addAll(ids);
+					ref=nommage(children.get(0).id, ref2);
+					}
+					
+					children2.addAll(branch(children.get(0), ref, element));
+
+					System.out.println("j= " + j);
+
+					/*
+					 * for (k = 0; k < children2.size(); k++) {
+					 * System.out.println(children2.get(k).id); }
+					 */
+					children.addAll(children2);
+					children.remove(0);
+
+					children2.clear();
+
+				}
+				t = children.size();
+
+				element--;
 			
 		}
 
-		for(int i=0;i<children.size();i++) {
-			 System.out.println(children.get(i).id);
+		for (int i = 0; i < children.size(); i++) {
+			System.out.println(children.get(i).id);
 		}
-		System.out.println("taille = "+children.size());
+		System.out.println("taille = " + children.size());
 
 	}
-
-	
 
 }
