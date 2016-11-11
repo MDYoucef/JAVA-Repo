@@ -275,6 +275,8 @@ public class Pblm extends JFrame {
 			 * System.out.println(children.get(i).getId()); }
 			 */
 			bb.gen(ref);
+		/*	ref=bb.nommage("a_d_b",ref);
+			System.out.println("ici  "+ref);*/
 
 		}
 

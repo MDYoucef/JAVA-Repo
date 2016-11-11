@@ -53,23 +53,21 @@ public class Node {
 	
 	ArrayList<Node> addChild(int nbe,ArrayList<String>ref,int j) {
 		
-		ArrayList<String> ref2 = new ArrayList<>();
-		ref2.addAll(ref);
+		
 		
 		ArrayList<Node> children = new ArrayList<>();
 		for (int i = 0; i < nbe; i++) {
 			System.out.println("i ="+i);
-			System.out.println("avant ref ="+ref);
-			System.out.println("avant ref2 ="+ref2);
+			
+			
 			children.add(i, new Node(0,null));
 			
 			children.get(i).setParent(this);
-			ref.remove(j);
+			//ref.remove(j);
 			children.get(i).setId(ref.get(i));
-			ref.clear();
-			ref.addAll(ref2);
+			
+			
 			System.out.println("apres ref ="+ref);
-			System.out.println("apres ref2 ="+ref2);
 		}
 		return children;
 
