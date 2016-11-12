@@ -265,8 +265,8 @@ public class Pblm extends JFrame {
 			BranchAndBound bb = new BranchAndBound(matrice, ref);
 			System.out.println("id =" + bb.root.getId());
 			System.out.println("enfant =" + bb.root.nbE);
-
-			String rId = ref.get(0);
+			
+			System.out.println("lb root =" + bb.root.lb);
 			//ref.remove(0);
 			/*
 			 * children=bb.root.addChild(bb.root.nbE,ref); for(int

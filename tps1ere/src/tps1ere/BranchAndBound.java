@@ -6,13 +6,33 @@ public class BranchAndBound {
 
 	public ArrayList<ArrayList<Double>> costs = new ArrayList<ArrayList<Double>>();
 	ArrayList<String> ids = new ArrayList<String>();
+	double lb;
 	Node root;
 
 	BranchAndBound(ArrayList<ArrayList<Double>> cout, ArrayList<String> id) {
 
 		costs = cout;
 		ids = id;
-		root = new Node(cout.get(0).size() - 1, id.get(0));
+		root = new Node(cout.get(0).size() - 1, id.get(0), lbroot(cout));
+	}
+
+	double lbroot(ArrayList<ArrayList<Double>> matrice) {
+		double s = 0;
+		ArrayList<Double> ligne = new ArrayList<Double>();
+
+		for (int i = 0; i < matrice.size(); i++) {
+
+			ligne.clear();
+			ligne = nMin(matrice.get(i), ligne, 2);
+
+			for (int j = 0; j < ligne.size(); j++) {
+
+				s = s + ligne.get(j);
+
+			}
+
+		}
+		return s;
 	}
 
 	ArrayList<String> nommage(String m1, ArrayList<String> ids) {
@@ -23,7 +43,7 @@ public class BranchAndBound {
 
 		for (int i = 0; i < p.length(); i++) {
 
-			if (p.charAt(i)=='>') {
+			if (p.charAt(i) == '>') {
 
 				ref.add(mot);
 				mot = new StringBuffer();
@@ -107,61 +127,57 @@ public class BranchAndBound {
 
 	}
 
+	/*
+	 * double bound(Node n) {
+	 * 
+	 * }
+	 */
+
 	void gen(ArrayList<String> ids) {
 
 		ArrayList<String> ref2 = new ArrayList<String>();
 		ArrayList<String> ref = new ArrayList<String>();
 		ref2.addAll(ids);
 		ArrayList<Node> children = new ArrayList<Node>();
+		ArrayList<Node> children2 = new ArrayList<Node>();
 		children.add(root);
-
-		int k = 0;
 		int element = ids.size() - 1;
-		int t = children.size();
-		ArrayList<Node> children2 = null;
+		int t1 = 1, t2 = 1;
 
 		for (int i = 0; i < ids.size(); i++) {
 
-			
-				children2 = new ArrayList<Node>();
+			for (int j = 0; j < t2; j++) {
 
-				for (int j = 0; j < t; j++) {
+				System.out.println("j avant= " + j);
 
-					// System.out.println("mot courant "+children.get(0).id);
-					ref2.clear();
-					if(i==ids.size()-1) {
-						ref.add(ids.get(0));
-						element=1;
-					}
-					else {
+				ref2.clear();
+
+				if (i == ids.size() - 1) {
+					ref.add(ids.get(0));
+					element = 1;
+				} else {
 					ref2.addAll(ids);
-					ref=nommage(children.get(0).id, ref2);
-					}
-					
-					children2.addAll(branch(children.get(0), ref, element));
-
-					//System.out.println("j= " + j);
-
-					/*
-					 * for (k = 0; k < children2.size(); k++) {
-					 * System.out.println(children2.get(k).id); }
-					 */
-					children.addAll(children2);
-					children.remove(0);
-
-					children2.clear();
-
+					ref = nommage(children.get(j + t1 - t2).id, ref2);
 				}
-				t = children.size();
+				System.out.println("<<<<mot courant>>>> " + children.get(j + t1 - t2).id);
+				children2.addAll(branch(children.get(j + t1 - t2), ref, element));
 
-				element--;
+			}
+			children.addAll(children2);
 			
+			t2 = children2.size();
+			t1 = children.size();
+			System.out.println("taille children2 avant= " + t2);
+			System.out.println("taille children avant= " + t1);
+			children2.clear();
+			System.out.println("taille childre2 apres= " + t2);
+			element--;
+
 		}
 
-		for (int i = 0; i < children.size(); i++) {
-			System.out.println(children.get(i).id);
+		for (int k = 0; k < children.size(); k++) {
+			System.out.println("dans children = " + children.get(k).id);
 		}
-		System.out.println("taille = " + children.size());
 
 	}
 

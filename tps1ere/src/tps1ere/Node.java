@@ -11,7 +11,7 @@ public class Node {
 	String id;
 	int nbE;
 	
-	Node(int nbE,String id) {
+	Node(int nbE,String id,double lb) {
 		this.parent=null;
 		this.lb=lb;
 		this.id=id;
@@ -60,7 +60,7 @@ public class Node {
 			
 			
 			
-			children.add(i, new Node(0,null));
+			children.add(i, new Node(0,null,0));
 			
 			children.get(i).setParent(this);
 			//ref.remove(j);
@@ -75,7 +75,7 @@ public class Node {
 
 	public static void main(String[] args) {
 		
-		Node n=new Node(3,"a");
+		Node n=new Node(3,"a",0);
 		ArrayList<Node> children = new ArrayList<>();
 		children=n.getChildren();
 		
