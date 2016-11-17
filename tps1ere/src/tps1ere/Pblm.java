@@ -226,6 +226,7 @@ public class Pblm extends JFrame {
 	class B3Action implements ActionListener {
 
 		public ArrayList<ArrayList<Double>> matrice = new ArrayList<ArrayList<Double>>();
+		public ArrayList<String> ref = new ArrayList<String>();
 
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
@@ -253,30 +254,16 @@ public class Pblm extends JFrame {
 
 				}
 
-				System.out.println(matrice);
 			}
 
-			ArrayList<String> ref = new ArrayList<String>();
 			for (int i = 0; i < v.size(); i++) {
 
 				ref.add(i, v.get(i).toString());
 			}
 
 			BranchAndBound bb = new BranchAndBound(matrice, ref);
-			System.out.println("id =" + bb.root.getId());
-			System.out.println("enfant =" + bb.root.nbE);
-			
-			System.out.println("lb root =" + bb.root.lb);
-			//ref.remove(0);
-			/*
-			 * children=bb.root.addChild(bb.root.nbE,ref); for(int
-			 * i=0;i<children.size();i++){
-			 * 
-			 * System.out.println(children.get(i).getId()); }
-			 */
-			bb.gen(ref);
-		/*	ref=bb.nommage("a_d_b",ref);
-			System.out.println("ici  "+ref);*/
+
+			bb.gen(ref, matrice);
 
 		}
 
