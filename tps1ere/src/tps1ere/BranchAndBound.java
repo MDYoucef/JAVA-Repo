@@ -401,55 +401,90 @@ public class BranchAndBound {
 		ArrayList<String> ref = new ArrayList<String>();
 		ref2.addAll(ids);
 		ArrayList<Node> children = new ArrayList<Node>();
-		ArrayList<Double> values = new ArrayList<Double>();
-		ArrayList<Double> vsorted = new ArrayList<Double>();
+		ArrayList<Node> values = new ArrayList<Node>();
 		ArrayList<Node> children2 = new ArrayList<Node>();
 		children.add(root);
-		int element = ids.size() - 1;
-		int t1 = 1, t2 = 1;
-		double min = 0;
+		int element = 0;
+		int t1 = 1;
+		boolean etat = true;
+		Node nc = root;
+		int i = 0;
+		maxloop: while (etat) {
 
-		for (int i = 0; i < ids.size(); i++) {
+			minloop: for (int j = 0; j < t1; j++) {
 
-			minloop: for (int j = 0; j < t2; j++) {
-
+				System.out.println("i= " + i);
 				ref2.clear();
 
-				if (i == ids.size() - 1) {
-					ref.add(ids.get(0));
-					element = 1;
-				} else {
-					ref2.addAll(ids);
-					ref = nommage(children.get(j + t1 - t2).id, ref2);
-				}
+				if (children.get(j).id == nc.id) {
 
-				if (children.get(j + t1 - t2).lb <= min) {
+					System.out.println("nombre enfant possible= " + element);
+					System.out.println("min= " + nc.lb);
+					System.out.println("<<<<noeud courant>>>> " + children.get(j).id);
 
-					System.out.println("min= " + min);
-					System.out.println("<<<<noeud courant>>>> " + children.get(j + t1 - t2).id);
-					children2.addAll(branch(children.get(j + t1 - t2), ref, element));
+					if (i == ids.size() - 1) {
+						ref.add(ids.get(0));
+						element = 1;
+						children2.addAll(branch(children.get(j), ref, element));
+					} else if (i < ids.size() - 1) {
+						ref2.addAll(ids);
+						ref = nommage(children.get(j).id, ref2);
+						element = nc.nbE;
+						children2.addAll(branch(children.get(j), ref, element));
+					} 
 
 					int x = children2.size();
 
-					for (int k = x - element; k < children2.size(); k++) {
+					loopk: for (int k = x - element; k < children2.size(); k++) {
 
 						System.out.println("######ses fils###### " + children2.get(k).id);
 
 						children2.get(k).setLb(bound(children2.get(k)));
-						double v = children2.get(k).lb;
-						values.add(v);
-					}
+						children2.get(k).setnbE(element - 1);
+						children2.get(k).setNiveau(children2.get(k).getParent().niveau + 1);
 
-				} else
+						values.add(children2.get(k));
+
+					}
+					Collections.sort(values, new Comparator<Node>() {
+						public int compare(Node d1, Node d2) {
+
+							return Double.compare(d1.lb, d2.lb);
+						}
+					});
+					//
+					if (i > ids.size() - 1) { 
+						
+						children2.add(children.get(j));
+						
+					}
+					
+
+				} else {
+
+					// System.out.println("pruning du noeud " +
+					// children.get(j).id);
 					continue minloop;
 
-			}
-			vsorted = nMin(values, vsorted, values.size());
-			min = vsorted.get(0);
-			vsorted.remove(0);
-			children.addAll(children2);
+				}
 
-			t2 = children2.size();
+			}
+
+			if (children2.get(0).lb <= values.get(0).lb && children2.get(0).niveau == ids.size()) {
+				children.addAll(children2);
+				break;
+
+			}
+
+			root.affichage(children2);
+			System.out.println("////////////////////////////////////////////////////////////////////////////");
+			root.affichage(values);
+			nc = values.get(0);
+
+			i = nc.niveau;
+			values.remove(0);
+			children.addAll(children2);
+			// t2 = children2.size();
 			t1 = children.size();
 			children2.clear();
 			element--;
@@ -459,21 +494,20 @@ public class BranchAndBound {
 
 		for (int k = 0; k < children.size(); k++) {
 
-			if (children.get(k).id.length() == rid) {
-				children2.add(children.get(k));
-			}
+			System.out.println("les neuds " + children.get(k).id);
+			System.out.println("les lb " + children.get(k).lb);
 		}
 
-		Collections.sort(children2, new Comparator<Node>() {
-			public int compare(Node n1, Node n2) {
-
-				return Double.compare(n1.lb, n2.lb);
-			}
-		});
-
-		System.out.println("le plus court chemin " + children2.get(0).id);
-		System.out.println("son cout " + children2.get(0).lb);
-		System.out.println("nombre total de noeud generer " + t1);
+		/*
+		 * Collections.sort(children2, new Comparator<Node>() { public int
+		 * compare(Node n1, Node n2) {
+		 * 
+		 * return Double.compare(n1.lb, n2.lb); } });
+		 * 
+		 * System.out.println("le plus court chemin " + children2.get(0).id);
+		 * System.out.println("son cout " + children2.get(0).lb);
+		 * System.out.println("nombre total de noeud generer " + t1);
+		 */
 
 	}
 

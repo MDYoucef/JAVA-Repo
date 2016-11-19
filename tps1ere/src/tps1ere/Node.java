@@ -10,83 +10,87 @@ public class Node {
 	double lb;
 	String id;
 	int nbE;
-	
-	Node(int nbE,String id,double lb) {
-		this.parent=null;
-		this.lb=lb;
-		this.id=id;
-		this.nbE=nbE;
+	int niveau;
+
+	Node(int nbE, String id, double lb) {
+		this.parent = null;
+		this.lb = lb;
+		this.id = id;
+		this.nbE = nbE;
 	}
 
 	void setId(String id) {
 
-		this.id =parent.id+">"+id;
+		this.id = parent.id + ">" + id;
+	}
+	
+	int getNbE() {
+
+		return nbE;
+	}
+	
+	void setnbE(int e) {
+
+		this.nbE=e;
+	}
+
+	void setNiveau(int i) {
+
+		this.niveau=i;
 	}
 	
 	void setLb(double lb) {
 
-		this.lb=lb;
+		this.lb = lb;
 	}
 
 	void setParent(Node p) {
-		//p.addChild(nbE);
-		this.parent=p;
+		// p.addChild(nbE);
+		this.parent = p;
 	}
 
 	Node getParent() {
 		return parent;
 	}
-	
+
 	String getId() {
 		return id;
 	}
-	
-	
-	
+
 	double getLb() {
 		return lb;
 	}
-	
+
 	ArrayList<Node> getChildren() {
 		return children;
 	}
-	
-	ArrayList<Node> addChild(int nbe,ArrayList<String>ref) {
-		
-		
-		
+
+	ArrayList<Node> addChild(int nbe, ArrayList<String> ref) {
+
 		ArrayList<Node> children = new ArrayList<>();
 		for (int i = 0; i < nbe; i++) {
-			
-			
-			
-			children.add(i, new Node(0,null,0));
-			
+
+			children.add(i, new Node(0, null, 0));
+
 			children.get(i).setParent(this);
-			//ref.remove(j);
+			// ref.remove(j);
 			children.get(i).setId(ref.get(i));
-			
-			
-			
+
 		}
 		return children;
 
 	}
+	
+	void affichage(ArrayList<Node> children) {
 
-	public static void main(String[] args) {
-		
-		Node n=new Node(3,"a",0);
-		ArrayList<Node> children = new ArrayList<>();
-		children=n.getChildren();
-		
-		System.out.println(children.size());
-		//for(int i=0;i<children.size();i++)
-		//System.out.println(children.get(i).getId());
-		//ArrayList<Node> children2 = new ArrayList<>();
-		//children2=children.get(1).addChild(4);
-		//for(int i=0;i<children.size();i++)
-		//System.out.println(children2.get(i).getLb());
-		//children.get(1).getChildren();
+		for (int i = 0; i < children.size(); i++) {
 
+			System.out.println(children.get(i).id);
+			System.out.println(children.get(i).lb);
+			System.out.println(children.get(i).niveau);
+
+		}
 	}
+
+	
 }
