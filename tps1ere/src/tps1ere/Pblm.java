@@ -45,9 +45,8 @@ public class Pblm extends JFrame {
 	JTable row;
 	JTable column;
 	JTable couts;
-	// JScrollPane sp3 = new JScrollPane(essai,
-	// JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-	// JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+	JTextArea ta2 = new JTextArea("");
 
 	int n;
 
@@ -73,6 +72,7 @@ public class Pblm extends JFrame {
 		essai.add(top);
 		essai.add(top2);
 		essai.add(top3);
+		essai.add(ta2);
 	}
 
 	void initPan1() {
@@ -122,7 +122,6 @@ public class Pblm extends JFrame {
 
 	void initPan3(ArrayList<StringBuffer> v) {
 
-		// top3.setBackground(Color.red);
 		top3.setLayout(null);
 		int longueur = v.size();
 
@@ -164,6 +163,13 @@ public class Pblm extends JFrame {
 
 		top3.add(b3);
 		b3.addActionListener(new B3Action());
+
+	}
+
+	void initPan4() {
+
+		ta2.setBounds(483, top3.getHeight() + top3.getY() + 60, 400, 51);
+		ta2.setFont(police);
 
 	}
 
@@ -260,11 +266,13 @@ public class Pblm extends JFrame {
 
 				ref.add(i, v.get(i).toString());
 			}
-
+			initPan4();
 			BranchAndBound bb = new BranchAndBound(matrice, ref);
-
+			int t = bb.gen(ref, matrice).size() - 1;
 			bb.gen(ref, matrice);
 
+			ta2.setText("le plus court chemin : " + bb.gen(ref, matrice).get(0).id + '\n' + "son cout : "
+					+ bb.gen(ref, matrice).get(0).lb + '\n' + "total des noeuds generes : " + t);
 		}
 
 	}

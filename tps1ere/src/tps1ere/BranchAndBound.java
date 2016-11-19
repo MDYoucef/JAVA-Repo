@@ -377,7 +377,7 @@ public class BranchAndBound {
 
 	}
 
-	void gen(ArrayList<String> ids, ArrayList<ArrayList<Double>> inter) {
+	ArrayList<Node> gen(ArrayList<String> ids, ArrayList<ArrayList<Double>> inter) {
 
 		ArrayList<String> ref2 = new ArrayList<String>();
 		ArrayList<String> ref = new ArrayList<String>();
@@ -476,10 +476,8 @@ public class BranchAndBound {
 				return Double.compare(n1.lb, n2.lb);
 			}
 		});
-
-		System.out.println("le plus court chemin " + children2.get(0).id);
-		System.out.println("son cout " + children2.get(0).lb);
-		System.out.println("nombre total de noeud generer " + t1);
+		children.add(0,children2.get(0));
+		return children;
 
 	}
 
