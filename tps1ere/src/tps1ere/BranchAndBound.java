@@ -267,7 +267,6 @@ public class BranchAndBound {
 		ArrayList<Double> lesMin = new ArrayList<Double>();
 		ArrayList<Double> sansnan = new ArrayList<Double>();
 		double x = 0, y = 0, s = 0;
-		System.out.println("refint= " + refint);
 
 		ArrayList<ArrayList<Double>> inter2 = new ArrayList<ArrayList<Double>>();
 		inter2 = copie(inter);
@@ -279,36 +278,25 @@ public class BranchAndBound {
 				if (i == 0) {
 
 					y = inter2.get(refint.get(i)).get(refint.get(i + 1));
-					System.out.println("y= " + y);
 					x = inter2.get(refint.get(i)).get(refint.get(refint.size() - 1));
-					System.out.println("x= " + x);
 					s = s + x + y;
 
-					System.out.println("s= " + s);
 				} else if (i == refint.size() - 1) {
 
 					x = inter2.get(refint.get(i)).get(refint.get(i - 1));
 					y = inter2.get(refint.get(i)).get(refint.get(0));
-					System.out.println("y= " + y);
-					System.out.println("x= " + x);
 					s = s + x + y;
-
-					System.out.println("s= " + s);
 
 				} else {
 
 					x = inter2.get(refint.get(i - 1)).get(refint.get(i));
 					y = inter2.get(refint.get(i)).get(refint.get(i + 1));
-					System.out.println("y= " + y);
-					System.out.println("x= " + x);
 					s = s + x + y;
-					// System.out.println("i= " + i);
-					System.out.println("s= " + s);
 				}
 
 				inter2 = copie(inter);
 			}
-			System.out.println("lower bound= " + s / 2);
+			// System.out.println("lower bound= " + s / 2);
 			return s / 2;
 		}
 
@@ -327,8 +315,6 @@ public class BranchAndBound {
 					x = lesMin.get(0);
 					s = s + x + y;
 
-					System.out.println("s= " + s);
-
 				} else if (i == refint.size() - 1) {
 
 					x = inter2.get(refint.get(i)).get(refint.get(i - 1));
@@ -337,15 +323,11 @@ public class BranchAndBound {
 					y = lesMin.get(0);
 					s = s + x + y;
 
-					System.out.println("s= " + s);
-
 				} else {
 
 					x = inter2.get(refint.get(i - 1)).get(refint.get(i));
 					y = inter2.get(refint.get(i)).get(refint.get(i + 1));
 					s = s + x + y;
-					// System.out.println("i= " + i);
-					System.out.println("s= " + s);
 				}
 				inter2 = copie(inter);
 			}
@@ -383,7 +365,7 @@ public class BranchAndBound {
 
 			}
 		}
-		System.out.println("lower bound= " + s / 2);
+		// System.out.println("lower bound= " + s / 2);
 		return s / 2;
 	}
 
@@ -413,57 +395,52 @@ public class BranchAndBound {
 
 			minloop: for (int j = 0; j < t1; j++) {
 
-				System.out.println("i= " + i);
 				ref2.clear();
 
 				if (children.get(j).id == nc.id) {
 
-					System.out.println("nombre enfant possible= " + element);
-					System.out.println("min= " + nc.lb);
-					System.out.println("<<<<noeud courant>>>> " + children.get(j).id);
+					//System.out.println("<<<<noeud courant>>>> " + children.get(j).id);
 
-					if (i == ids.size() - 1) {
-						ref.add(ids.get(0));
-						element = 1;
-						children2.addAll(branch(children.get(j), ref, element));
-					} else if (i < ids.size() - 1) {
-						ref2.addAll(ids);
-						ref = nommage(children.get(j).id, ref2);
-						element = nc.nbE;
-						children2.addAll(branch(children.get(j), ref, element));
-					} 
+					if (i <= ids.size() - 1) {
 
-					int x = children2.size();
-
-					for (int k = x - element; k < children2.size(); k++) {
-
-						System.out.println("######ses fils###### " + children2.get(k).id);
-
-						children2.get(k).setLb(bound(children2.get(k)));
-						children2.get(k).setnbE(element - 1);
-						children2.get(k).setNiveau(children2.get(k).getParent().niveau + 1);
-
-						values.add(children2.get(k));
-
-					}
-					Collections.sort(values, new Comparator<Node>() {
-						public int compare(Node d1, Node d2) {
-
-							return Double.compare(d1.lb, d2.lb);
+						if (i == ids.size() - 1) {
+							ref.add(ids.get(0));
+							element = 1;
+							children2.addAll(branch(children.get(j), ref, element));
+						} else if (i < ids.size() - 1) {
+							ref2.addAll(ids);
+							ref = nommage(children.get(j).id, ref2);
+							element = nc.nbE;
+							children2.addAll(branch(children.get(j), ref, element));
 						}
-					});
-					//
-					if (i > ids.size() - 1) { 
-						
+
+						int x = children2.size();
+
+						for (int k = x - element; k < children2.size(); k++) {
+
+							//System.out.println("######ses fils###### " + children2.get(k).id);
+
+							children2.get(k).setLb(bound(children2.get(k)));
+							children2.get(k).setnbE(element - 1);
+							children2.get(k).setNiveau(children2.get(k).getParent().niveau + 1);
+
+							values.add(children2.get(k));
+
+						}
+						Collections.sort(values, new Comparator<Node>() {
+							public int compare(Node d1, Node d2) {
+
+								return Double.compare(d1.lb, d2.lb);
+							}
+						});
+					} else {
+
 						break maxloop;
-						//children.addAll(children2);
+
 					}
-					
 
 				} else {
 
-					// System.out.println("pruning du noeud " +
-					// children.get(j).id);
 					continue minloop;
 
 				}
@@ -475,39 +452,34 @@ public class BranchAndBound {
 				break;
 
 			}
-
-			root.affichage(children2);
-			System.out.println("////////////////////////////////////////////////////////////////////////////");
-			root.affichage(values);
 			nc = values.get(0);
 
 			i = nc.niveau;
 			values.remove(0);
 			children.addAll(children2);
-			// t2 = children2.size();
 			t1 = children.size();
 			children2.clear();
 			element--;
 
 		}
-		//int rid = children.get(children.size() - 1).id.length();
+		children2.clear();
 
 		for (int k = 0; k < children.size(); k++) {
 
-			System.out.println("les neuds " + children.get(k).id);
-			System.out.println("les lb " + children.get(k).lb);
+			if (children.get(k).niveau > ids.size() - 1)
+				children2.add(children.get(k));
 		}
+		t1 = children.size();
+		Collections.sort(children2, new Comparator<Node>() {
+			public int compare(Node n1, Node n2) {
 
-		/*
-		 * Collections.sort(children2, new Comparator<Node>() { public int
-		 * compare(Node n1, Node n2) {
-		 * 
-		 * return Double.compare(n1.lb, n2.lb); } });
-		 * 
-		 * System.out.println("le plus court chemin " + children2.get(0).id);
-		 * System.out.println("son cout " + children2.get(0).lb);
-		 * System.out.println("nombre total de noeud generer " + t1);
-		 */
+				return Double.compare(n1.lb, n2.lb);
+			}
+		});
+
+		System.out.println("le plus court chemin " + children2.get(0).id);
+		System.out.println("son cout " + children2.get(0).lb);
+		System.out.println("nombre total de noeud generer " + t1);
 
 	}
 
