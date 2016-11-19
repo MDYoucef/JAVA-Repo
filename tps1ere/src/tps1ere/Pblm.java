@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 public class Pblm extends JFrame {
 
@@ -22,7 +25,8 @@ public class Pblm extends JFrame {
 	private static final long serialVersionUID = 1L;
 	JPanel container = new JPanel();
 	Bg essai = new Bg();
-
+	
+	Color c=new Color(50,50,50);
 	Font police = new Font("Times New Roman", Font.BOLD, 12);
 	JLabel bg = new JLabel();
 
@@ -47,6 +51,7 @@ public class Pblm extends JFrame {
 	JTable couts;
 
 	JTextArea ta2 = new JTextArea("");
+	Border border = BorderFactory.createLineBorder(Color.gray);
 
 	int n;
 
@@ -82,7 +87,7 @@ public class Pblm extends JFrame {
 		jtf.setForeground(Color.white);
 		top.setBounds(353, 10, 300, 200);
 		jtf.setBounds(90, 50, 120, 30);
-		label.setFont(police);
+		jtf.setBackground(c);
 		label.setBounds(30, 15, 240, 20);
 		b1.setBounds(120, 100, 60, 30);
 		top.add(jtf);
@@ -98,9 +103,10 @@ public class Pblm extends JFrame {
 
 		top2.setBounds(713, 10, 300, 200);
 		label2.setBounds(80, 15, 140, 20);
-		label2.setFont(police);
+		// label2.setFont(police);
 		b2.setBounds(120, 160, 60, 30);
 		lesvilles.setFont(police);
+		lesvilles.setBackground(c);
 		lesvilles.setForeground(Color.white);
 		lesvilles.setBounds(90, 50, 120, 30);
 		sp.setBounds(90, 50, 120, 90);
@@ -146,17 +152,18 @@ public class Pblm extends JFrame {
 		couts.setRowHeight(20);
 		top3.setBounds(683 - 37 * (longueur + 1), 240, (longueur + 1) * 75, longueur * 20 + 130);
 		label3.setBounds(50, 15, 200, 20);
-		label.setFont(police);
+		// label.setFont(police);
 		top3.add(label3);
 		row.setBounds(75, 60, longueur * 75, 20);
 		column.setBounds(0, 80, 75, longueur * 20);
 		couts.setBounds(75, 80, longueur * 75, longueur * 20);
+		couts.setBackground(c);
 		b3.setBounds((longueur + 1) * 75 / 2 - 40, longueur * 20 + 100, 80, 30);
 		row.setEnabled(false);
 		column.setEnabled(false);
 		row.setForeground(Color.white);
 		column.setForeground(Color.white);
-		couts.setForeground(Color.white);
+		// couts.setForeground(Color.white);
 		top3.add(row);
 		top3.add(column);
 		top3.add(couts);
@@ -168,9 +175,11 @@ public class Pblm extends JFrame {
 
 	void initPan4() {
 
+		
 		ta2.setBounds(483, top3.getHeight() + top3.getY() + 60, 400, 51);
 		ta2.setFont(police);
-
+		ta2.setBackground(c);
+		ta2.setBorder(border);
 	}
 
 	class B1Action implements ActionListener {

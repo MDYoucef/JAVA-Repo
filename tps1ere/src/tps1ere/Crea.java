@@ -10,8 +10,8 @@ public class Crea {
 		// TODO Auto-generated method stub
 		
 		try {
-            // select Look and Feel
-            UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
+			com.jtattoo.plaf.acryl.AcrylLookAndFeel.setTheme("Default");
+            UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
 		Pblm tsp=new Pblm();
 		tsp.setVisible(true);
 		}
