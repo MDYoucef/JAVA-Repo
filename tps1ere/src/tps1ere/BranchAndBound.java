@@ -435,7 +435,7 @@ public class BranchAndBound {
 
 					int x = children2.size();
 
-					loopk: for (int k = x - element; k < children2.size(); k++) {
+					for (int k = x - element; k < children2.size(); k++) {
 
 						System.out.println("######ses fils###### " + children2.get(k).id);
 
@@ -455,8 +455,8 @@ public class BranchAndBound {
 					//
 					if (i > ids.size() - 1) { 
 						
-						children2.add(children.get(j));
-						
+						break maxloop;
+						//children.addAll(children2);
 					}
 					
 
@@ -490,7 +490,7 @@ public class BranchAndBound {
 			element--;
 
 		}
-		int rid = children.get(children.size() - 1).id.length();
+		//int rid = children.get(children.size() - 1).id.length();
 
 		for (int k = 0; k < children.size(); k++) {
 
