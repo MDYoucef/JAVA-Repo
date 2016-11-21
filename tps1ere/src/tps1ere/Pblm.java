@@ -25,8 +25,8 @@ public class Pblm extends JFrame {
 	private static final long serialVersionUID = 1L;
 	JPanel container = new JPanel();
 	Bg essai = new Bg();
-	
-	Color c=new Color(50,50,50);
+
+	Color c = new Color(50, 50, 50);
 	Font police = new Font("Times New Roman", Font.BOLD, 12);
 	JLabel bg = new JLabel();
 
@@ -175,7 +175,6 @@ public class Pblm extends JFrame {
 
 	void initPan4() {
 
-		
 		ta2.setBounds(483, top3.getHeight() + top3.getY() + 60, 400, 51);
 		ta2.setFont(police);
 		ta2.setBackground(c);
@@ -257,9 +256,16 @@ public class Pblm extends JFrame {
 
 					for (int j = 0; j < v.size(); j++) {
 
-						if (couts.getValueAt(i, j) != null)
-							cost.add(j, Double.parseDouble(couts.getValueAt(i, j).toString()));
-						else {
+						try {
+
+							if (couts.getValueAt(i, j) != null)
+								cost.add(j, Double.parseDouble(couts.getValueAt(i, j).toString()));
+							else {
+								double d = Double.NaN;
+								cost.add(j, d);
+							}
+
+						} catch (NumberFormatException e) {
 							double d = Double.NaN;
 							cost.add(j, d);
 						}
