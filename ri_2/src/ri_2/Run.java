@@ -122,13 +122,24 @@ public class Run {
 				try {
 					pos = base.attribute(c).index();
 				} catch (Exception e1) {
-					if (k == requette.numAttributes() - 2) {
-
-						String mot = "aucun resultat trouvé";
-						out2.println(mot);
-						//break maxloop;
-					} else
-						continue minloop;
+					requette.deleteAttributeAt(k);
+					if(requette.numAttributes()==2) {
+						String sortie="aucun resultat trouvé";
+						out2.println(sortie);
+						out2.close();
+						if (Desktop.isDesktopSupported()) {
+							try {
+								File myFile = new File("/home/skyolia/Documents/tp/fin.txt");
+								//File myFile2 = new File("/home/skyolia/Documents/tp/test.arff");
+								Desktop.getDesktop().open(myFile);
+								//Desktop.getDesktop().open(myFile2);
+							} catch (IOException ex) {
+								// no application registered for PDFs
+							}
+						}
+						System.exit(0);
+					}
+					else continue minloop;
 				}
 				// System.out.println("instance courante "+base.instance(i));
 				// System.out.println("instance courante "+i);
@@ -162,7 +173,7 @@ public class Run {
 
 		for (int y = 0; y < ps.size(); y++) {
 			String mot = ps.get(y).i.stringValue(base.numAttributes() - 1) + "      le ps " + ps.get(y).ps
-					+ "dans le dossier : " + ps.get(y).i.value(0);
+					+ "       dans le dossier : " + ps.get(y).i.value(0);
 			String sep = "\n" + "\n" + "\n";
 			// System.out.println("le contenu
 			// "+ps.get(y).i.stringValue(base.numAttributes()-1));
