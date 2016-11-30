@@ -6,11 +6,11 @@ import java.util.Scanner;
 
 public class MatriceListe {
 
-	int ligne, colonne;
-	ArrayList<ArrayList<Double>> matrice = new ArrayList<ArrayList<Double>>();
-	Scanner lire = new Scanner(System.in);
+	public int ligne, colonne;
+	public ArrayList<ArrayList<Double>> matrice = new ArrayList<ArrayList<Double>>();
+	public Scanner lire = new Scanner(System.in);
 
-	MatriceListe(int n, int m) throws TypeDElementInvalide {
+	public MatriceListe(int n, int m) throws TypeDElementInvalide {
 		if (n == 0 || m == 0 || n < 0 || m < 0) {
 			throw new TypeDElementInvalide();
 		}
