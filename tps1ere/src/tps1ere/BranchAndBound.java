@@ -477,6 +477,7 @@ public class BranchAndBound {
 			}
 		});
 		children.add(0,children2.get(0));
+		
 		return children;
 
 	}

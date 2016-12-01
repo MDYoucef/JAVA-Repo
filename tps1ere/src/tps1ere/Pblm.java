@@ -19,9 +19,9 @@ import javax.swing.border.Border;
 
 public class Pblm extends JFrame {
 
-	/**
-	 * 
-	 */
+	public ArrayList<ArrayList<Double>> matrice = new ArrayList<ArrayList<Double>>();
+	public ArrayList<String> ref = new ArrayList<String>();
+	
 	private static final long serialVersionUID = 1L;
 	JPanel container = new JPanel();
 	Bg essai = new Bg();
@@ -45,6 +45,7 @@ public class Pblm extends JFrame {
 	JLabel label3 = new JLabel("tapez les differents couts");
 	JButton b3 = new JButton("find");
 	JLabel top3 = new JLabel();
+	JButton b4 = new JButton("visualiser l'arbre");
 
 	JTable row;
 	JTable column;
@@ -78,6 +79,7 @@ public class Pblm extends JFrame {
 		essai.add(top2);
 		essai.add(top3);
 		essai.add(ta2);
+		essai.add(b4);
 	}
 
 	void initPan1() {
@@ -179,6 +181,9 @@ public class Pblm extends JFrame {
 		ta2.setFont(police);
 		ta2.setBackground(c);
 		ta2.setBorder(border);
+		b4.setBounds(top3.getX()+b3.getX(), ta2.getHeight()+ta2.getY()+20, b3.getWidth(), b3.getHeight());
+		b4.addActionListener(new B4Action());
+		
 	}
 
 	class B1Action implements ActionListener {
@@ -237,10 +242,7 @@ public class Pblm extends JFrame {
 
 	}
 
-	class B3Action implements ActionListener {
-
-		public ArrayList<ArrayList<Double>> matrice = new ArrayList<ArrayList<Double>>();
-		public ArrayList<String> ref = new ArrayList<String>();
+	public class B3Action implements ActionListener {
 
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
@@ -288,6 +290,30 @@ public class Pblm extends JFrame {
 
 			ta2.setText("le plus court chemin : " + bb.gen(ref, matrice).get(0).id + '\n' + "son cout : "
 					+ bb.gen(ref, matrice).get(0).lb + '\n' + "total des noeuds generes : " + t);
+			
+		}
+
+	}
+	
+	class B4Action implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			
+			String aff=new String();
+			BranchAndBound bb = new BranchAndBound(matrice, ref);
+			ArrayList<Node>tree=bb.gen(ref, matrice);
+			tree.remove(0);
+			
+			Tree_visu tv=new Tree_visu();
+			for(int i=0;i<tree.size();i++) {
+				
+				aff=aff+tree.get(i).id+"     "+tree.get(i).lb+"\n"+"\n";
+				
+			}
+			tv.print.setText(aff);
+			tv.setVisible(true);
+
 		}
 
 	}

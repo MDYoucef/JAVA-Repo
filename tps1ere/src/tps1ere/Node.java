@@ -87,7 +87,7 @@ public class Node {
 
 			System.out.println(children.get(i).id);
 			System.out.println(children.get(i).lb);
-			System.out.println(children.get(i).niveau);
+			//System.out.println(children.get(i).niveau);
 
 		}
 	}
