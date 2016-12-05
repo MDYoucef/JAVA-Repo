@@ -278,25 +278,27 @@ public class BranchAndBound {
 				if (i == 0) {
 
 					y = inter2.get(refint.get(i)).get(refint.get(i + 1));
-					x = inter2.get(refint.get(i)).get(refint.get(refint.size() - 1));
+					x = inter2.get(refint.get(refint.size() - 1)).get(refint.get(i));
 					s = s + x + y;
 
 				} else if (i == refint.size() - 1) {
 
-					x = inter2.get(refint.get(i)).get(refint.get(i - 1));
+					x = inter2.get(refint.get(i-1)).get(refint.get(i));
 					y = inter2.get(refint.get(i)).get(refint.get(0));
 					s = s + x + y;
-
+			
 				} else {
 
 					x = inter2.get(refint.get(i - 1)).get(refint.get(i));
 					y = inter2.get(refint.get(i)).get(refint.get(i + 1));
 					s = s + x + y;
+					
 				}
 
 				inter2 = copie(inter);
 			}
-			// System.out.println("lower bound= " + s / 2);
+			System.out.println("s final= " + s);
+			System.out.println("lower bound= " + s / 2);
 			return s / 2;
 		}
 
@@ -317,7 +319,7 @@ public class BranchAndBound {
 
 				} else if (i == refint.size() - 1) {
 
-					x = inter2.get(refint.get(i)).get(refint.get(i - 1));
+					x = inter2.get(refint.get(i-1)).get(refint.get(i));
 					sansnan.addAll(valnan(supp(inter2, refint.get(i), refint.get(i - 1)).get(refint.get(i))));
 					lesMin = nMin(sansnan, lesMin, 1);
 					y = lesMin.get(0);
@@ -365,7 +367,7 @@ public class BranchAndBound {
 
 			}
 		}
-		// System.out.println("lower bound= " + s / 2);
+		//System.out.println("lower bound= " + s / 2);
 		return s / 2;
 	}
 
