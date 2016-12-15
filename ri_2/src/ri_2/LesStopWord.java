@@ -12,9 +12,9 @@ public class LesStopWord implements StopwordsHandler{
 	
 	ArrayList<String>mes_stop_word=new ArrayList<String>();
 	
-	LesStopWord () throws FileNotFoundException {
+	LesStopWord (String sw) throws FileNotFoundException {
 		
-		Scanner s = new Scanner(new File("/home/skyolia/Documents/tp/stopwords.txt"));
+		Scanner s = new Scanner(new File(sw));
 		while (s.hasNext()){
 			mes_stop_word.add(s.next());
 		}
@@ -26,7 +26,7 @@ public class LesStopWord implements StopwordsHandler{
 			String nameCapitalized = chaine + mes_stop_word.get(i).substring(1);
 			mes_stop_word.add(nameCapitalized);
 		}
-		System.out.println(mes_stop_word);
+		System.out.println("les mots vide = "+sw);
 	}
 	
 	public boolean isStopword(String ex) {

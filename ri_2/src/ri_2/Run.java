@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.jar.Attributes;
-
+import weka.attributeSelection.*;
 import weka.core.Attribute;
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
@@ -35,7 +35,7 @@ public class Run {
 		return data;
 	}
 
-	Instances moteur(String entree, String sortie) throws Exception {
+	Instances moteur(String entree,String del,String sw, String sortie) throws Exception {
 
 		TextDirectoryLoader txl = new TextDirectoryLoader();
 		File base = new File(entree);
@@ -50,13 +50,13 @@ public class Run {
 		LovinsStemmer les_stemmer = new LovinsStemmer();
 		filtre.setStemmer(les_stemmer);// lemmatisation
 
-		LesStopWord les_stopword = new LesStopWord();
+		LesStopWord les_stopword = new LesStopWord(sw);
 		filtre.setStopwordsHandler(les_stopword);// elimination des mots vides
 
 		WordTokenizer wt = new WordTokenizer();
-		String delimiters = " \r\n\t.,;:\"\'()?!-¿¡+*&#$%\\/=<>[]_`@";
+		LesDelimiter delimiter=new LesDelimiter();
+		String delimiters = " "+delimiter.mesdelimiter(del);
 		wt.setDelimiters(delimiters);
-		filtre.setTokenizer(wt);
 		filtre.setTokenizer(wt);// les delimiters
 
 		filtre.setOutputWordCounts(true);
@@ -74,28 +74,15 @@ public class Run {
 			// last.add(i.instance(x).stringValue(0));
 			i2.instance(x).setValue(i2.numAttributes() - 1, i.instance(x).stringValue(0));
 		}
-		// i2.insertAttributeAt(new Attribute("contenu", last),
-		// i2.numAttributes());
-		/*
-		 * Add att=new Add(); att.setNominalLabels("a");
-		 * att.setAttributeName("contenu"); att.setInputFormat(i2);
-		 * i2=Filter.useFilter(i2, att); for(int x=0;x<i2.numInstances();x++) {
-		 * 
-		 * }
-		 */
-
-		// System.out.println("contenu" +i);
-		/*
-		 * Attribute c=i2.attribute(3);
-		 * System.out.println("la valeur de l'attribut 3 dans l'instance 0 = "
-		 * +i2.instance(0).value(c));
-		 * System.out.println("nom de l'attribut 3 = "+i2.attribute(3));
-		 */
 
 		ArffSaver saver2 = new ArffSaver();
 		saver2.setInstances(i2);
 		saver2.setFile(new File(sortie));
 		saver2.writeBatch();
+		
+		//System.out.println("le corpus = "+i2);
+		//System.out.println("les delimiter = "+delimiters);
+		System.out.println("nombre attribut = "+i2.numAttributes());
 		return i2;
 	}
 
@@ -163,7 +150,6 @@ public class Run {
 			}
 		});
 		Collections.reverse(ps);
-		System.out.println("aaaa" + ps.size());
 		for (int y = 0; y < ps.size(); y++) {
 			if (ps.get(y).ps == 0) {
 				ps.remove(y);
@@ -194,6 +180,7 @@ public class Run {
 				// no application registered for PDFs
 			}
 		}
+		System.out.println(ps.size());
 		return ps;
 	}
 

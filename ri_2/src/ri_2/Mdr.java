@@ -11,8 +11,8 @@ public class Mdr {
 			UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
 			
 			Gui g = new Gui();
-			Run base=new Run();
-			base.moteur("/home/skyolia/Documents/tp/corpus","/home/skyolia/Documents/tp/test.arff");
+			//Run base=new Run();
+			//base.moteur("/home/skyolia/Documents/tp/corpus","/home/skyolia/Documents/tp/test.arff");
 			g.setVisible(true);
 		} catch (Exception ex) {
 			ex.printStackTrace();

@@ -6,11 +6,12 @@ import java.util.Scanner;
 
 public class LesDelimiter {
 
-	String delimiters;
+	String delimiters="";
 
-	String mesdelimiter() throws FileNotFoundException {
-
-		Scanner s = new Scanner(new File("/home/skyolia/Documents/tp/delimiteurs"));
+	String mesdelimiter(String del) throws FileNotFoundException {
+		
+		//del="/home/skyolia/Documents/tp/delimiteurs";
+		Scanner s = new Scanner(new File(del));
 		while (s.hasNext()) {
 			delimiters = delimiters + s.next();
 		}
