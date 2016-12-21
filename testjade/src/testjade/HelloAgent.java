@@ -24,49 +24,53 @@ public class HelloAgent extends Agent {
 		/*
 		 * args[1] = "da vinci code"; args[2] = "ange et demon";
 		 */
-		
+
 		if (args != null && args.length > 0) {
-			targetBookTitle = (String) args[0];
-			System.out.println("Trying to buy " + targetBookTitle);
+			// targetBookTitle = (String) args[0];
+			System.out.println("je veux des calculs ");
 
-			addBehaviour(new OneShotBehaviour() {
-				
-				@Override
-				public void action() {
-					
-					//MessageTemplate resultTemp=null;
-					int x=0;
-					jade.lang.acl.ACLMessage m=new jade.lang.acl.ACLMessage(jade.lang.acl.ACLMessage.REQUEST);
-					
-					
-	                    m.addReceiver(new AID("vendeur",AID.ISLOCALNAME));
-	                
-					
-					m.setContent("harry potter");
-					
-					//m.setConversationId("calcul-requete") ;
-					send(m);
-					System.out.println("le message qui a ete envoyé" +m.getContent());
-					//resultTemp =MessageTemplate.MatchConversationId("calcul-requet");
-
-					System.out.println((String) args[0]+x);
-					//System.out.println((String) args[1]+x);
-					
-				}
-			}
-			);
-			
-			/*addBehaviour(new TickerBehaviour(this, 500) {
-
-				int x = 0;
+			addBehaviour(new TickerBehaviour(this, 500) {
 
 				@Override
 				protected void onTick() {
-					x++;
+					MessageTemplate partie1 = null;
+					MessageTemplate partie2 = null;
+					int x = 0;
+					jade.lang.acl.ACLMessage m = new jade.lang.acl.ACLMessage(jade.lang.acl.ACLMessage.REQUEST);
+					
 
-					System.out.println((String) args[1]+x);
+					m.addReceiver(new AID("vendeur", AID.ISLOCALNAME));
+
+					int chiffre = (int) (Math.random() * 10);
+					m.setContent(chiffre + "");
+
+					send(m);
+
+					jade.lang.acl.ACLMessage reception = receive();
+
+					if (reception != null) {
+						if (reception.getPerformative() == jade.lang.acl.ACLMessage.REQUEST) {
+							jade.lang.acl.ACLMessage m1 = new jade.lang.acl.ACLMessage(jade.lang.acl.ACLMessage.INFORM);
+							System.out.println("envoie du 2eme chiffre");
+							m1.addReceiver(reception.getSender());
+
+							int chiffre2 = (int) (Math.random() * 10);
+							m1.setContent(chiffre2 + "");
+
+							send(m1);
+						}
+						
+						else if (reception.getPerformative()==jade.lang.acl.ACLMessage.INFORM) {
+							System.out.println("j'ai reçu la reponse qui est "+reception.getContent());
+							reception = null;
+
+						}
+						
+					} else {
+						block();
+					}
 				}
-			});*/
+			});
 
 		} else {
 			// Make the agent terminate immediately
@@ -79,7 +83,7 @@ public class HelloAgent extends Agent {
 	// Put agent clean-up operations here
 	protected void takeDown() {
 		// Printout a dismissal message
-		System.out.println("oooooooooooooooooooooooooooooooooooooo"+lesAgents.length);
+		System.out.println("oooooooooooooooooooooooooooooooooooooo" + lesAgents.length);
 		System.out.println("Buyer-agent " + getAID().getName() + " terminating.");
 	}
 }
