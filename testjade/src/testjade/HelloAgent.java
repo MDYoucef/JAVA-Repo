@@ -11,8 +11,7 @@ import jade.lang.acl.MessageTemplate;
 public class HelloAgent extends Agent {
 	private String targetBookTitle;
 	// The list of known seller agents
-	private AID[] lesAgents; // { new AID("seller1", AID.ISLOCALNAME), new
-								// AID("seller2", AID.ISLOCALNAME) };
+	private AID[] lesAgents = { new AID("vendeur", AID.ISLOCALNAME) };
 
 	// Put agent initializations here
 	protected void setup() {
@@ -24,48 +23,50 @@ public class HelloAgent extends Agent {
 		/*
 		 * args[1] = "da vinci code"; args[2] = "ange et demon";
 		 */
+		long p = 500;
 
 		if (args != null && args.length > 0) {
 			// targetBookTitle = (String) args[0];
 			System.out.println("je veux des calculs ");
 
-			addBehaviour(new TickerBehaviour(this, 500) {
+			addBehaviour(new TickerBehaviour(this,1000) {
 
 				@Override
-				protected void onTick() {
-					MessageTemplate partie1 = null;
-					MessageTemplate partie2 = null;
-					int x = 0;
-					jade.lang.acl.ACLMessage m = new jade.lang.acl.ACLMessage(jade.lang.acl.ACLMessage.REQUEST);
-					
-
-					m.addReceiver(new AID("vendeur", AID.ISLOCALNAME));
-
-					int chiffre = (int) (Math.random() * 10);
-					m.setContent(chiffre + "");
-
-					send(m);
+				public void onTick() {
 
 					jade.lang.acl.ACLMessage reception = receive();
 
 					if (reception != null) {
-						if (reception.getPerformative() == jade.lang.acl.ACLMessage.REQUEST) {
+
+						if (reception.getContent().equals("je suis pret")) {
 							jade.lang.acl.ACLMessage m1 = new jade.lang.acl.ACLMessage(jade.lang.acl.ACLMessage.INFORM);
+							int chiffre = (int) (Math.random() * 10);
+							System.out.println("envoie du 1er chiffre");
+							m1.addReceiver(reception.getSender());
+							m1.setContent(chiffre + "");
+							m1.setConversationId("debut");
+							send(m1);
+
+						} else if (reception.getContent().equals("j'ai reçu le 1er chiffre")) {
+							jade.lang.acl.ACLMessage m1 = new jade.lang.acl.ACLMessage(jade.lang.acl.ACLMessage.INFORM);
+							int chiffre2 = (int) (Math.random() * 10);
 							System.out.println("envoie du 2eme chiffre");
 							m1.addReceiver(reception.getSender());
-
-							int chiffre2 = (int) (Math.random() * 10);
 							m1.setContent(chiffre2 + "");
-
+							m1.setConversationId("finale");
 							send(m1);
 						}
-						
-						else if (reception.getPerformative()==jade.lang.acl.ACLMessage.INFORM) {
-							System.out.println("j'ai reçu la reponse qui est "+reception.getContent());
-							reception = null;
 
+						else {
+							System.out.println("j'ai reçu la reponse qui est " + reception.getContent());
+							jade.lang.acl.ACLMessage m1 = new jade.lang.acl.ACLMessage(jade.lang.acl.ACLMessage.INFORM);
+							int chiffre = (int) (Math.random() * 10);
+							m1.addReceiver(reception.getSender());
+							m1.setContent(chiffre + "");
+							m1.setConversationId("debut");
+							send(m1);
 						}
-						
+
 					} else {
 						block();
 					}
