@@ -7,13 +7,11 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.Border;
 
@@ -97,17 +95,17 @@ public class Gui extends JFrame {
 		init.setBackground(Color.white);
 		init.setBounds(0, 0, 400, 500);
 		init.setBorder(border);
-		
+
 		corpus_comm.setFont(lab_police);
 		corpus_comm.setBounds(10, 30, 380, 10);
 		corpus_path.setBounds(10, 50, 380, 30);
-		
+
 		par_corpus.setBounds(155, 100, 90, 30);
 		corpus_path.setBorder(border);
 		init.add(corpus_comm);
 		init.add(corpus_path);
 		init.add(par_corpus);
-		
+
 		delim_comm.setFont(lab_police);
 		delim_comm.setBounds(10, 140, 380, 10);
 		delimiter_path.setBounds(10, 160, 380, 30);
@@ -116,7 +114,7 @@ public class Gui extends JFrame {
 		init.add(delim_comm);
 		init.add(delimiter_path);
 		init.add(par_delim);
-		
+
 		sw_comm.setFont(lab_police);
 		sw_comm.setBounds(10, 250, 380, 10);
 		sw_path.setBounds(10, 270, 380, 30);
@@ -125,10 +123,10 @@ public class Gui extends JFrame {
 		init.add(sw_comm);
 		init.add(sw_path);
 		init.add(par_sw);
-		
+
 		confirmer.setBounds(155, 400, 90, 30);
 		init.add(confirmer);
-		
+
 		par_corpus.addActionListener(new Folder_choose());
 		par_delim.addActionListener(new File_choose());
 		par_sw.addActionListener(new File_choose1());
@@ -162,7 +160,8 @@ public class Gui extends JFrame {
 				e1.printStackTrace();
 			}
 			try {
-				mareq = run.moteur("/home/skyolia/Documents/tp/requette/",dpath,spath, "/home/skyolia/Documents/tp/requette.arff");
+				mareq = run.moteur("/home/skyolia/Documents/tp/requette/", dpath, spath,
+						"/home/skyolia/Documents/tp/requette.arff");
 			} catch (Exception e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
@@ -191,14 +190,12 @@ public class Gui extends JFrame {
 
 			if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 				cpath = chooser.getSelectedFile().getAbsolutePath();
-				System.out.println("cpath " + cpath);
-			} else {
-				System.out.println("No Selection ");
+
+				corpus_path.setText(cpath);
+
 			}
-			corpus_path.setText(cpath);
 
 		}
-
 	}
 
 	public class File_choose implements ActionListener {
@@ -211,9 +208,11 @@ public class Gui extends JFrame {
 			dialogue.showOpenDialog(null);
 
 			// récupération du fichier sélectionné
+
 			dpath = dialogue.getSelectedFile().getAbsolutePath();
 			System.out.println("qpath : " + dpath);
 			delimiter_path.setText(dpath);
+
 		}
 
 	}
@@ -228,6 +227,7 @@ public class Gui extends JFrame {
 			dialogue.showOpenDialog(null);
 
 			// récupération du fichier sélectionné
+
 			spath = dialogue.getSelectedFile().getAbsolutePath();
 			System.out.println("qpath : " + spath);
 			sw_path.setText(spath);
@@ -235,20 +235,30 @@ public class Gui extends JFrame {
 		}
 
 	}
-	
+
 	public class Confirmer implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Run base=new Run();
+			Run base = new Run();
 			try {
-				base.moteur(cpath,dpath,spath,"/home/skyolia/Documents/tp/test.arff");
+
+				if (cpath == null)
+					cpath = "/home/skyolia/Documents/tp/corpus";
+
+				if (dpath == null)
+					dpath = "/home/skyolia/Documents/tp/delimiteurs";
+
+				if (spath == null)
+					spath = "/home/skyolia/Documents/tp/stopwords.txt";
+
+				base.moteur(cpath, dpath, spath, "/home/skyolia/Documents/tp/test.arff");
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
+
 		}
-		
+
 	}
 }

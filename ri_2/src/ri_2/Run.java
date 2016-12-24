@@ -3,15 +3,17 @@ package ri_2;
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.jar.Attributes;
+import java.util.HashMap;
+import java.util.Map;
+
 import weka.attributeSelection.*;
+import weka.filters.supervised.attribute.AttributeSelection;
 import weka.core.Attribute;
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
@@ -20,18 +22,30 @@ import weka.core.converters.ArffLoader.ArffReader;
 import weka.core.stemmers.LovinsStemmer;
 import weka.core.tokenizers.WordTokenizer;
 import weka.filters.Filter;
-import weka.filters.unsupervised.attribute.Add;
-import weka.filters.unsupervised.attribute.AddID;
 import weka.filters.unsupervised.attribute.StringToWordVector;
 
 public class Run {
 
-	Instances chargement(String path) throws IOException {
+	Instances chargement(String path) throws Exception {
 
 		BufferedReader reader = new BufferedReader(new FileReader(path));
 		ArffReader arff = new ArffReader(reader);
 		Instances data = arff.getData();
 		data.setClassIndex(0);
+		/*AttributeSelection as=new AttributeSelection();
+		CfsSubsetEval e=new CfsSubsetEval();
+		GreedyStepwise s=new GreedyStepwise();
+		
+		//s.setSearchBackwards(true);
+		
+		as.setEvaluator(e);
+		as.setSearch(s);
+		
+		as.setInputFormat(data);
+		
+
+		Instances i3= Filter.useFilter(data, as);
+		System.out.println("nombre attribut data = "+data.numAttributes());*/
 		return data;
 	}
 
@@ -63,12 +77,22 @@ public class Run {
 		filtre.setInputFormat(i);
 
 		Instances i2 = Filter.useFilter(i, filtre);
-
+		System.out.println("nombre attribut i2= "+i2.numAttributes());
+		
+		/*OneRAttributeEval eva=new OneRAttributeEval();
+		Map<Attribute, Double> infogainscores = new HashMap<Attribute, Double>();
+		for (int x = 1; x < i2.numAttributes(); x++) {
+		    Attribute t_attr = i2.attribute(x);
+		    double infogain  = eva.evaluateAttribute(x);
+		    System.out.println("eval= "+infogain);
+		    infogainscores.put(t_attr, infogain);
+		}*/
+		
 		i.renameAttribute(0, "contenu");
-		// ArrayList <String>last=new ArrayList<String>();
-
+		
 		i2.insertAttributeAt(i.attribute(0), i2.numAttributes());
 
+		//i2.del
 		for (int x = 0; x < i2.numInstances(); x++) {
 
 			// last.add(i.instance(x).stringValue(0));
@@ -82,25 +106,17 @@ public class Run {
 		
 		//System.out.println("le corpus = "+i2);
 		//System.out.println("les delimiter = "+delimiters);
-		System.out.println("nombre attribut = "+i2.numAttributes());
+		
 		return i2;
 	}
 
 	ArrayList<Instance_Ps> PS(Instances base, Instances requette) throws Exception {
-
-		// base=chargement("/home/skyolia/Documents/tp/test.arff");
-		// requette=moteur("/home/skyolia/Documents/tp/requette/","/home/skyolia/Documents/tp/requette.arff");
 
 		ArrayList<Instance_Ps> ps = new ArrayList<Instance_Ps>();
 		PrintWriter out = new PrintWriter("/home/skyolia/Documents/tp/res.txt");
 		PrintWriter out2 = new PrintWriter("/home/skyolia/Documents/tp/fin.txt");
 		double v = 0;
 
-		// Attribute c=base.attribute(3);
-		// System.out.println("la valeur de l'attribut 3 dans l'instance 0 =
-		// "+base.instance(0).value(c));
-		// System.out.println("nom de l'attribut 3 = "+base.attribute(3));
-		// System.out.println("pos de l'attribut 3 = "+c.index());
 		maxloop: for (int i = 0; i < base.numInstances(); i++) {
 			Instance_Ps ips = new Instance_Ps();
 			minloop: for (int k = 1; k < requette.numAttributes() - 1; k++) {
