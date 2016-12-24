@@ -68,6 +68,7 @@ public class HelloAgent extends Agent {
 						}
 
 					} else {
+						System.out.println("block acheteur");
 						block();
 					}
 				}

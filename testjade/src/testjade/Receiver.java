@@ -54,6 +54,7 @@ public class Receiver extends Agent {
 
 					}
 				} else {
+					System.out.println("block sommmeur");
 					block();
 				}
 
