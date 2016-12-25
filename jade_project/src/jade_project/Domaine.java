@@ -27,7 +27,7 @@ public class Domaine {
 				borne.add(borne.get(i) + sous);
 
 		}
-		//borne.set(0, 2);
+		
 		return borne;
 
 	}

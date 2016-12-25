@@ -21,7 +21,7 @@ public class Federateur extends Agent {
 
 		Domaine d = new Domaine();
 		int n = (int) (Math.random() * 4000);
-		ArrayList<Integer> domaines = d.lesDomaines(n, 36);
+		ArrayList<Integer> domaines = d.lesDomaines(n, 6);
 		System.out.println("le chiffre a tester = " + n);
 		System.out.println("les domaines du testes = " + domaines);
 

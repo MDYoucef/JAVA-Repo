@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
+import jade.lang.acl.MessageTemplate;
 
 public class FederateurBehaviour extends Behaviour {
 
@@ -25,7 +26,7 @@ public class FederateurBehaviour extends Behaviour {
 	}
 
 	public void action() {
-
+		
 		jade.lang.acl.ACLMessage reception = myAgent.receive();
 		jade.lang.acl.ACLMessage d = new jade.lang.acl.ACLMessage(jade.lang.acl.ACLMessage.INFORM);
 

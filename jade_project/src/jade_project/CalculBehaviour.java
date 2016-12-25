@@ -69,9 +69,9 @@ public class CalculBehaviour extends Behaviour {
 		}
 		System.out.println('\n');
 		if (x)
-			return false;
-		else
 			return true;
+		else
+			return false;
 
 	}
 
@@ -89,6 +89,7 @@ public class CalculBehaviour extends Behaviour {
 			nreceive = true;
 			reception = null;
 			System.out.println(myAgent.getAID().getName() + " : le chiffre du test est reçu est c'est " + n);
+			System.out.println('\n');
 
 		}
 
